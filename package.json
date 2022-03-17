@@ -34,6 +34,10 @@
   ],
   "author": "Anthony Bobrov <anton.bobrov@hotmail.com>",
   "license": "MIT",
+  "files": [
+    "src",
+    "build"
+  ],
   "peerDependencies": {
     "react": "^17.0.0"
   },
