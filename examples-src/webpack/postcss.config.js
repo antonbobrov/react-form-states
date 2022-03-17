@@ -1,17 +1,17 @@
 module.exports = {
-    plugins: [
-        [
-            'postcss-preset-env',
-        ],
-        [
-            'cssnano',
-            {
-                preset: [
-                    'default', {
-                        colormin: false,
-                    },
-                ],
-            },
-        ],
+  plugins: [
+    [
+      'postcss-preset-env',
     ],
+    [
+      'cssnano',
+      {
+        preset: [
+          'default', {
+            colormin: false,
+          },
+        ],
+      },
+    ],
+  ],
 };
