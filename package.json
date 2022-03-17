@@ -1,7 +1,7 @@
 {
-  "name": "react-form-store",
+  "name": "react-form-states",
   "version": "0.1.1",
-  "description": "React form store hooks",
+  "description": "React form state hooks",
   "browserslist": [
     "last 20 versions, > 0.5%, ie >= 10"
   ],
@@ -24,7 +24,7 @@
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/antonbobrov/react-form-store.git"
+    "url": "git+https://github.com/antonbobrov/react-form-states.git"
   },
   "keywords": [
     "react",
