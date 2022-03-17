@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "outDir": "./build/es",
+    "target": "es6",
+    "module": "ES6",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationDir": "./build/types",
+    "declarationMap": true,
+  },
+  "include": [
+    "./src/index.ts"
+  ]
+}

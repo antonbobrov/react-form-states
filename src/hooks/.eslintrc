@@ -1,0 +1,7 @@
+{
+    "rules": {
+        "no-case-declarations": "off",
+        "default-param-last": "off",
+        "no-param-reassign": "off"
+    }
+}
