@@ -94,6 +94,9 @@ export default function useFormInput({
     });
     return () => {
       clearTimeout(timeout);
+      if (storeTimeout) {
+        clearTimeout(storeTimeout);
+      }
       storeEvent();
     };
   }, [formStore, getInputFromFormStore]);
