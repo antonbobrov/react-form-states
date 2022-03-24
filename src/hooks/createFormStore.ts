@@ -4,6 +4,7 @@ import { IFormInput } from '..';
 
 type State = {
     inputs: IFormInput[];
+    namedInputs: Record<string, IFormInput>;
 };
 
 type Action = {
@@ -39,6 +40,7 @@ export default function createFormStore(): Store<State, Action> {
   const store = useMemo(() => createStore((
     state: State = {
       inputs: [],
+      namedInputs: {},
     },
     action: Action,
   ) => {
@@ -104,6 +106,11 @@ export default function createFormStore(): Store<State, Action> {
       default:
         break;
     }
+
+    // generate names inputs
+    state.inputs.forEach((input) => {
+      state.namedInputs[input.name] = input;
+    });
 
     return state;
   }), []);
