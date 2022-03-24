@@ -7,6 +7,7 @@ function App() {
   const formHandler = useFormHandler({
     formRef,
     formStore,
+    resetOnSuccess: true,
   });
 
   const nameRef = useRef<HTMLInputElement>(null);
