@@ -32,6 +32,13 @@ export default function useFormHandler({
 }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
+  const [store, setStore] = useState(formStore.getState());
+  useEffect(() => formStore.subscribe(() => {
+    setStore({
+      ...formStore.getState(),
+    });
+  }), []);
+
   const submit = useCallback(async () => {
     if (!formRef.current) {
       return;
@@ -95,5 +102,6 @@ export default function useFormHandler({
 
   return {
     isLoading,
+    store,
   };
 }
