@@ -12,6 +12,10 @@ interface Props {
   onFinish?: () => void;
   onSuccess?: (data: IFormResponse) => void;
   onError?: (data: IFormResponse) => void;
+  /**
+   * @default false
+   */
+  resetOnSuccess?: boolean;
 }
 
 /**
@@ -24,6 +28,7 @@ export default function useFormHandler({
   onFinish,
   onSuccess,
   onError,
+  resetOnSuccess = false,
 }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -46,9 +51,11 @@ export default function useFormHandler({
         if (onSuccess) {
           onSuccess(response);
         }
-        formStore.dispatch({
-          type: 'RESET',
-        });
+        if (resetOnSuccess) {
+          formStore.dispatch({
+            type: 'RESET',
+          });
+        }
       } else if (response.errors && response.errors.length > 0) {
         if (onError) {
           onError(response);
