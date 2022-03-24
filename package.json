@@ -12,7 +12,8 @@
     "prepare:es": "tsc --project tsconfig.es.json",
     "prepare:cjs": "tsc --project tsconfig.cjs.json",
     "docs": "typedoc --out examples-build/docs ./src --theme default --hideGenerator",
-    "gh-pages": "git add examples-build/* && git commit -m \"Update github pages\" && git subtree push --prefix examples-build/ origin gh-pages",
+    "gh-pages": "git add examples-build/* && git commit -m \"Update github pages\" && npm run gh-pages:push",
+    "gh-pages:push": "git subtree split --prefix examples-build/ -b gh-pages-temp && git push -f origin gh-pages-temp:gh-pages && git branch -D gh-pages-temp",
     "lint:js": "eslint . --ext .ts,.tsx,.js,.jsx",
     "prepare": "npm run lint:js && npm run prepare:all && npm run pages-build && npm run docs && npm run gh-pages",
     "release": "npm version patch && npm publish"
