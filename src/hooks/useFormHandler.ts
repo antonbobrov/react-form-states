@@ -3,11 +3,11 @@ import {
 } from 'react';
 import { addEventListener } from 'vevet-dom';
 import { IFormResponse } from '..';
-import useFormStore from './useFormStore';
+import createFormStore from './createFormStore';
 
 interface Props {
   formRef: RefObject<HTMLFormElement>;
-  formStore: ReturnType<typeof useFormStore>;
+  formStore: ReturnType<typeof createFormStore>;
   onStart?: () => void;
   onFinish?: () => void;
   onSuccess?: (data: IFormResponse) => void;

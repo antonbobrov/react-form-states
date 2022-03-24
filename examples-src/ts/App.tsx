@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
-import { useFormHandler, useFormInput, useFormStore } from '../../src';
+import { useFormHandler, useFormInput, createFormStore } from '../../src';
 
 function App() {
   const formRef = useRef<HTMLFormElement>(null);
-  const formStore = useFormStore();
+  const formStore = createFormStore();
   const formHandler = useFormHandler({
     formRef,
     formStore,

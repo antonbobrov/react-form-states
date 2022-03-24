@@ -35,7 +35,7 @@ type Action = {
 /**
  * Create a store that would contain information about inputs
  */
-export default function useFormStore(): Store<State, Action> {
+export default function createFormStore(): Store<State, Action> {
   const store = useMemo(() => createStore((
     state: State = {
       inputs: [],

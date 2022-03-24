@@ -3,7 +3,7 @@ import {
 } from 'react';
 import { addEventListener, IAddEventListener } from 'vevet-dom';
 import validator from 'email-validator';
-import useFormStore from './useFormStore';
+import createFormStore from './createFormStore';
 import { IFormInput } from '..';
 
 interface InputStates extends IFormInput {
@@ -12,7 +12,7 @@ interface InputStates extends IFormInput {
 
 interface Props {
   inputRef: RefObject<HTMLInputElement | HTMLTextAreaElement>;
-  formStore: ReturnType<typeof useFormStore>;
+  formStore: ReturnType<typeof createFormStore>;
   styles?: any;
   customValidation?: (
     value: string

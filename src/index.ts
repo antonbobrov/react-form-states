@@ -1,6 +1,6 @@
 import useFormHandler from './hooks/useFormHandler';
-import useFormStore from './hooks/useFormStore';
-import useFormInput from './hooks/useFormStoreInput';
+import createFormStore from './hooks/createFormStore';
+import useFormInput from './hooks/useFormInput';
 
 export interface IFormInput {
   input: HTMLInputElement | HTMLTextAreaElement;
@@ -24,7 +24,7 @@ export interface IFormResponse {
 }
 
 export {
-  useFormStore,
+  createFormStore,
   useFormHandler,
   useFormInput,
 };
