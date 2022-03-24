@@ -16,7 +16,7 @@
     "gh-pages:push": "git subtree split --prefix examples-build/ -b gh-pages-temp && git push -f origin gh-pages-temp:gh-pages && git branch -D gh-pages-temp",
     "lint:js": "eslint . --ext .ts,.tsx,.js,.jsx",
     "prepare": "npm run lint:js && npm run prepare:all && npm run pages-build && npm run docs && npm run gh-pages",
-    "release": "npm version patch && npm publish"
+    "release": "npm publish"
   },
   "main": "./build/cjs/index.js",
   "types": "./build/types/index.d.ts",
