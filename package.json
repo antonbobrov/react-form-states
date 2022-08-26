@@ -40,7 +40,7 @@
     "build"
   ],
   "peerDependencies": {
-    "react": "^17.0.0"
+    "react": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
