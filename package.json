@@ -1,6 +1,6 @@
 {
   "name": "react-form-states",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "React form state hooks",
   "browserslist": [
     "last 20 versions, > 0.5%, ie >= 10"
