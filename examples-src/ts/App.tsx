@@ -1,25 +1,22 @@
-import React, { useRef } from 'react';
-import { useFormHandler, useFormInput, createFormStore } from '../../src';
+import React, { useRef, useState } from 'react';
+import { useFormHandler, createFormStore } from '../../src';
+import Input from './Input';
 
 function App() {
+  const [progress, setProgress] = useState(0);
+
   const formRef = useRef<HTMLFormElement>(null);
   const formStore = createFormStore();
   const formHandler = useFormHandler({
     formRef,
     formStore,
     resetOnSuccess: true,
-  });
-
-  const nameRef = useRef<HTMLInputElement>(null);
-  const nameHandler = useFormInput({
-    inputRef: nameRef,
-    formStore,
-  });
-
-  const emailRef = useRef<HTMLInputElement>(null);
-  const emailHandler = useFormInput({
-    inputRef: emailRef,
-    formStore,
+    onProgress(val) {
+      setProgress(val);
+    },
+    onFinish() {
+      setProgress(0);
+    },
   });
 
   return (
@@ -29,54 +26,33 @@ function App() {
 
       <form
         ref={formRef}
-        action="https://react-form.free.beeceptor.com"
+        action="https://react-form-states.free.beeceptor.com"
         method="post"
+        encType="multipart/form-data"
       >
 
         <div className="form-group">
-          <label
-            htmlFor="input-name"
-            className="form-label"
-          >
-            Name
-          </label>
-          <input
-            ref={nameRef}
-            id="input-name"
-            className={[
-              'form-control',
-              nameHandler ? [
-                nameHandler.isValid && !nameHandler.isEmpty ? 'is-valid' : '',
-                !nameHandler.isValid ? 'is-invalid' : '',
-              ].join(' ') : '',
-            ].join(' ')}
-            type="name"
-            name="name"
-            minLength={3}
-            maxLength={20}
+          <Input
+            formStore={formStore}
+            inputProps={{
+              type: 'text',
+              name: 'name',
+              id: 'input-name',
+              minLength: 3,
+              maxLength: 20,
+            }}
           />
           <div className="form-label small mt-2">Min length: 3 & Max length: 20</div>
         </div>
 
         <div className="form-group mt-3">
-          <label
-            htmlFor="input-email"
-            className="form-label"
-          >
-            Email
-          </label>
-          <input
-            ref={emailRef}
-            id="input-email"
-            className={[
-              'form-control',
-              emailHandler ? [
-                emailHandler.isValid && !emailHandler.isEmpty ? 'is-valid' : '',
-                !emailHandler.isValid ? 'is-invalid' : '',
-              ].join(' ') : '',
-            ].join(' ')}
-            type="email"
-            name="email"
+          <Input
+            formStore={formStore}
+            inputProps={{
+              type: 'email',
+              name: 'email',
+              id: 'input-email',
+            }}
           />
         </div>
 
@@ -89,11 +65,18 @@ function App() {
           Submit
         </button>
 
-        <br />
         {formHandler.isLoading ? (
-          <div className="spinner-border mt-4" role="status">
-            <span className="sr-only" />
-          </div>
+          <>
+            <br />
+            Progress:
+            {' '}
+            {progress * 100}
+            %
+            <br />
+            <div className="spinner-border mt-4" role="status">
+              <span className="sr-only" />
+            </div>
+          </>
         ) : ''}
 
       </form>

@@ -12,6 +12,7 @@ interface Props {
   onFinish?: () => void;
   onSuccess?: (data: IFormResponse) => void;
   onError?: (data: IFormResponse) => void;
+  onProgress?: (progress: number) => void;
   /**
    * @default false
    */
@@ -28,6 +29,7 @@ export default function useFormHandler({
   onFinish,
   onSuccess,
   onError,
+  onProgress,
   resetOnSuccess = false,
 }: Props) {
   const [isLoading, setIsLoading] = useState(false);
@@ -39,34 +41,44 @@ export default function useFormHandler({
     });
   }), []);
 
+  const fetchData = useCallback(() => new Promise<IFormResponse>((resolve, reject) => {
+    const form = formRef.current!;
+    const xhr = new XMLHttpRequest();
+
+    xhr.upload.addEventListener('progress', (e) => onProgress?.(e.loaded / e.total));
+    xhr.addEventListener('load', () => {
+      try {
+        const json = JSON.parse(xhr.responseText);
+        resolve(json);
+      } catch (e) {
+        reject(e);
+      }
+    });
+    xhr.addEventListener('error', () => reject(new Error('Request failed')));
+    xhr.addEventListener('abort', () => reject(new Error('Request aborted')));
+
+    xhr.open(form.method, form.action, true);
+    xhr.send(new FormData(form));
+  }), []);
+
   const submit = useCallback(async () => {
     if (!formRef.current) {
       return;
     }
-    if (onStart) {
-      onStart();
-    }
+
+    onStart?.();
     setIsLoading(true);
 
-    try {
-      const response: IFormResponse = await (await fetch(formRef.current.action, {
-        method: 'POST',
-        body: new FormData(formRef.current),
-      })).json();
-
+    fetchData().then((response) => {
       if (response.success) {
-        if (onSuccess) {
-          onSuccess(response);
-        }
+        onSuccess?.(response);
         if (resetOnSuccess) {
           formStore.dispatch({
             type: 'RESET',
           });
         }
       } else if (response.errors && response.errors.length > 0) {
-        if (onError) {
-          onError(response);
-        }
+        onError?.(response);
         const { errors } = response;
         const { inputs } = formStore.getState();
         inputs.forEach((input) => {
@@ -77,15 +89,13 @@ export default function useFormHandler({
           });
         });
       }
-    } catch (e) {
+    }).catch((reason) => {
       // eslint-disable-next-line no-console
-      console.error(e);
-    }
-
-    if (onFinish) {
-      onFinish();
-    }
-    setIsLoading(false);
+      console.error(reason);
+    }).finally(() => {
+      onFinish?.();
+      setIsLoading(false);
+    });
   }, [formRef, formStore]);
 
   // set form events
