@@ -107,7 +107,17 @@ export default function useFormHandler({
       evt.preventDefault();
       submit();
     });
-    return listener.remove;
+
+    const listenerKeyboard = addEventListener(formRef.current, 'keydown', (evt) => {
+      if (evt.ctrlKey && evt.keyCode === 13) {
+        submit();
+      }
+    });
+
+    return () => {
+      listener.remove();
+      listenerKeyboard.remove();
+    };
   }, [formRef, submit]);
 
   return {
